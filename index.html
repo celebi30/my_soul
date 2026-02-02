@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Для Дианы ❤️</title>
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    body{
+      margin:0;
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(900px 700px at 50% 12%, #35185c, #090911 70%),
+        radial-gradient(600px 500px at 10% 90%, rgba(255,107,214,.18), transparent 55%),
+        radial-gradient(600px 500px at 90% 90%, rgba(255,207,90,.14), transparent 55%);
+      color:#fff;
+      overflow:hidden;
+      padding: 16px;
+    }
+
+    /* плавающие блики */
+    .glow{
+      position: fixed;
+      inset: -40%;
+      background: radial-gradient(circle at 30% 40%, rgba(255,107,214,.10), transparent 45%),
+                  radial-gradient(circle at 70% 65%, rgba(255,207,90,.08), transparent 45%);
+      filter: blur(40px);
+      animation: drift 10s ease-in-out infinite alternate;
+      pointer-events:none;
+      z-index: 0;
+    }
+    @keyframes drift { from { transform: translate(-2%, -1%) scale(1); } to { transform: translate(2%, 1%) scale(1.02); } }
+
+    .card{
+      width:min(560px, 94vw);
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      backdrop-filter: blur(12px);
+      border-radius: 22px;
+      box-shadow: 0 20px 90px rgba(0,0,0,.55);
+      padding: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      font-size: 13px;
+      opacity:.92;
+      margin-bottom: 10px;
+      white-space: nowrap;
+    }
+
+    h1{
+      margin: 6px 0 10px;
+      font-size: 22px;
+      line-height: 1.15;
+      letter-spacing: .2px;
+    }
+
+    p{
+      margin: 0 0 14px;
+      opacity:.88;
+      line-height:1.35;
+    }
+
+    .stage{
+      position: relative;
+      width: 100%;
+      height: min(55vh, 440px);
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.16);
+      overflow: hidden;
+      touch-action: none;
+      display:grid;
+      place-items:center;
+    }
+
+    .btn{
+      position:absolute;
+      border:0;
+      border-radius: 18px;
+      padding: 16px 18px;
+      font-weight: 900;
+      font-size: 18px;
+      min-width: 140px;
+      cursor:pointer;
+      user-select:none;
+      transition: transform .14s ease, opacity .2s ease, filter .2s ease;
+    }
+
+    #yes{
+      color:#0b0b12;
+      background: linear-gradient(135deg, #ff6bd6, #ffcf5a);
+      box-shadow: 0 14px 34px rgba(255,107,214,.18);
+    }
+    #yes:active{ transform: scale(.98); }
+
+    #no{
+      color:#fff;
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.16);
+      backdrop-filter: blur(6px);
+    }
+
+    .meta{
+      margin-top: 10px;
+      font-size: 13px;
+      opacity:.78;
+      display:flex;
+      justify-content: space-between;
+      gap:10px;
+      flex-wrap: wrap;
+    }
+
+    /* успех-экран */
+    .successWrap{
+      width: 100%;
+      height: 100%;
+      display:grid;
+      place-items:center;
+      padding: 18px 14px;
+    }
+    .success{
+      width: min(420px, 92vw);
+      text-align:center;
+      animation: popIn .45s ease both;
+    }
+    @keyframes popIn {
+      from { transform: translateY(10px) scale(.98); opacity: 0; }
+      to   { transform: translateY(0) scale(1); opacity: 1; }
+    }
+
+    .success h2{
+      margin: 0 0 10px;
+      font-size: 26px;
+      letter-spacing:.2px;
+    }
+    .typed{
+      font-size: 18px;
+      margin: 0 0 14px;
+      opacity:.95;
+      min-height: 52px;
+    }
+
+    .gif{
+      width: min(330px, 78vw);
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 16px 40px rgba(0,0,0,.35);
+      display:block;
+      margin: 0 auto;
+    }
+
+    .actions{
+      margin-top: 14px;
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+
+    .action{
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.08);
+      color:#fff;
+      padding: 10px 12px;
+      font-weight: 900;
+      cursor:pointer;
+    }
+    .action.primary{
+      background: rgba(255,107,214,.18);
+      border-color: rgba(255,107,214,.25);
+    }
+
+    /* сердечки-конфетти */
+    .heart{
+      position: fixed;
+      top: -24px;
+      left: 50%;
+      font-size: 18px;
+      pointer-events:none;
+      will-change: transform, opacity;
+      opacity:.95;
+      filter: drop-shadow(0 10px 14px rgba(0,0,0,.35));
+      z-index: 999;
+    }
+
+    /* невидимый слой для "снимка" */
+    #captureArea{
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* маленькая подсказка сверху */
+    .toast{
+      position: fixed;
+      left: 50%;
+      top: 14px;
+      transform: translateX(-50%);
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.35);
+      border: 1px solid rgba(255,255,255,.12);
+      font-weight: 800;
+      font-size: 13px;
+      opacity: 0;
+      pointer-events:none;
+      transition: opacity .25s ease, transform .25s ease;
+      z-index: 2000;
+    }
+    .toast.show{ opacity: 1; transform: translateX(-50%) translateY(2px); }
+  </style>
+</head>
+<body>
+  <div class="glow"></div>
+  <div class="toast" id="toast">Готово ✅</div>
+
+  <div class="card" id="card">
+    <span class="badge">правильный ответ только один 😌</span>
+    <h1 id="title">Диана, ты будешь моей Валентинкой? ❤️</h1>
+    <p id="subtitle">Нажатие «Да» вызывает улыбку. «Нет» может начать паниковать 🙂</p>
+
+    <div class="stage" id="stage">
+      <button class="btn" id="yes">Да</button>
+      <button class="btn" id="no">Нет</button>
+    </div>
+
+    <div class="meta">
+      <div>Попыток «Нет»: <b id="tries">0</b></div>
+      <div>Подсказка: попробуй нажать «Нет» 😉</div>
+    </div>
+  </div>
+
+  <script>
+    // ===== НАСТРОЙКИ (уже с твоими текстами) =====
+    const SETTINGS = {
+      question: "Диана, ты будешь моей Валентинкой? ❤️",
+      sub: "Нажатие «Да» вызывает улыбку. «Нет» может начать паниковать 🙂",
+      successTitle: "Диана ❤️",
+      successText: "Ты — мой выбор сегодня, завтра и всегда ❤️",
+      gifUrl: "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcThwZjZoaWIwYm1udGU5czYxMTFzd2xhaDU1Z3l4aDFnbmxveWh1dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/A8O8nTI7TtbvG/giphy.gif",
+
+      panicAfter: 1,
+      fearRadius: 120,
+      maxTries: 14
+    };
+    // ============================================
+
+    const card   = document.getElementById('card');
+    const stage  = document.getElementById('stage');
+    const yesBtn = document.getElementById('yes');
+    const noBtn  = document.getElementById('no');
+    const triesEl = document.getElementById('tries');
+    const toast = document.getElementById('toast');
+
+    document.getElementById('title').textContent = SETTINGS.question;
+    document.getElementById('subtitle').textContent = SETTINGS.sub;
+
+    let tries = 0;
+
+    function clamp(v,a,b){ return Math.max(a, Math.min(b,v)); }
+
+    function showToast(text){
+      toast.textContent = text;
+      toast.classList.add('show');
+      setTimeout(()=>toast.classList.remove('show'), 1200);
+    }
+
+    function placeButtons(){
+      const r = stage.getBoundingClientRect();
+      const yR = yesBtn.getBoundingClientRect();
+      const nR = noBtn.getBoundingClientRect();
+      const gap = 14;
+
+      const y = r.height - 24 - Math.max(yR.height, nR.height);
+      const x0 = (r.width - (yR.width + gap + nR.width)) / 2;
+
+      yesBtn.style.left = x0 + "px";
+      yesBtn.style.top  = y + "px";
+
+      noBtn.style.left  = (x0 + yR.width + gap) + "px";
+      noBtn.style.top   = y + "px";
+    }
+
+    function growYes(){
+      const s = 1 + tries * 0.11;
+      yesBtn.style.transform = `scale(${Math.min(s, 2.1)})`;
+      // лёгкий "сияющий" эффект
+      yesBtn.style.filter = `brightness(${1 + Math.min(tries*0.03, 0.35)})`;
+    }
+
+    function heartsBurst(count=70){
+      const e = ["❤️","💖","💘","💕","💗","💝"];
+      for(let i=0;i<count;i++){
+        const h = document.createElement("div");
+        h.className = "heart";
+        h.textContent = e[(Math.random()*e.length)|0];
+        const startX = Math.random()*window.innerWidth;
+        const drift = (Math.random()-0.5)*300;
+        const dur = 1400 + Math.random()*1500;
+        const size = 14 + Math.random()*18;
+        h.style.left = startX+"px";
+        h.style.fontSize = size+"px";
+        document.body.appendChild(h);
+
+        const s = performance.now();
+        (function f(t){
+          const p = Math.min(1,(t-s)/dur);
+          const y = -24 + p*(window.innerHeight+90);
+          const rot = (Math.random()*260 - 130)*p;
+          h.style.transform = `translate(${drift*p}px, ${y}px) rotate(${rot}deg)`;
+          h.style.opacity = String(1-p);
+          if(p<1) requestAnimationFrame(f);
+          else h.remove();
+        })(s);
+      }
+    }
+
+    function typeInto(el, text, speed=24){
+      el.textContent = "";
+      let i = 0;
+      const tick = () => {
+        el.textContent = text.slice(0, i);
+        i++;
+        if(i <= text.length) setTimeout(tick, speed);
+      };
+      tick();
+    }
+
+    // --- Сохранение как картинка (без библиотек, через SVG foreignObject) ---
+    async function saveAsImage(node){
+      // этот метод работает в большинстве мобильных браузеров (особенно Chrome/Safari современных),
+      // но у некоторых iOS-версий может быть капризным. В таком случае остаётся обычный скриншот.
+      const rect = node.getBoundingClientRect();
+      const w = Math.round(rect.width);
+      const h = Math.round(rect.height);
+
+      const clone = node.cloneNode(true);
+
+      // оборачиваем в div с тем же размером
+      const wrapper = document.createElement('div');
+      wrapper.style.width = w + "px";
+      wrapper.style.height = h + "px";
+      wrapper.style.background = "transparent";
+      wrapper.appendChild(clone);
+
+      // сериализуем HTML
+      const html = new XMLSerializer().serializeToString(wrapper);
+
+      const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}">
+          <foreignObject width="100%" height="100%">
+            <div xmlns="http://www.w3.org/1999/xhtml">${html}</div>
+          </foreignObject>
+        </svg>
+      `;
+
+      const blob = new Blob([svg], {type: "image/svg+xml;charset=utf-8"});
+      const url = URL.createObjectURL(blob);
+
+      const img = new Image();
+      img.decoding = "async";
+      img.src = url;
+
+      await new Promise((res, rej) => {
+        img.onload = () => res();
+        img.onerror = () => rej(new Error("Не удалось создать изображение"));
+      });
+
+      const canvas = document.createElement('canvas');
+      canvas.width = w * 2;   // чуть четче
+      canvas.height = h * 2;
+      const ctx = canvas.getContext('2d');
+      ctx.scale(2,2);
+      ctx.drawImage(img, 0, 0);
+      URL.revokeObjectURL(url);
+
+      const png = await new Promise(res => canvas.toBlob(res, "image/png"));
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(png);
+      a.download = "diana-love.png";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      showToast("Сохранено ❤️");
+    }
+
+    function renderSuccess(){
+      stage.innerHTML = `
+        <div class="successWrap" id="captureArea">
+          <div class="success">
+            <h2>${SETTINGS.successTitle}</h2>
+            <div class="typed" id="typed"></div>
+            <img class="gif" src="${SETTINGS.gifUrl}" alt="love gif">
+            <div class="actions">
+              <button class="action primary" id="btnSecond">Я тоже выбираю тебя</button>
+              <button class="action" id="btnSave">Сохранить как картинку</button>
+              <button class="action" id="btnAgain">Ещё раз</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      heartsBurst(85);
+
+      const typed = document.getElementById('typed');
+      typeInto(typed, SETTINGS.successText, 26);
+
+      document.getElementById('btnSecond').addEventListener('click', () => {
+        typed.style.minHeight = "78px";
+        typeInto(typed, SETTINGS.secondText, 22);
+        heartsBurst(90);
+      });
+
+      document.getElementById('btnSave').addEventListener('click', async () => {
+        try{
+          await saveAsImage(document.getElementById('captureArea'));
+        }catch(err){
+          // запасной план: сказать сделать скриншот
+          showToast("Если не сохранилось — сделай скриншот 📸");
+        }
+      });
+
+      document.getElementById('btnAgain').addEventListener('click', () => location.reload());
+    }
+
+    // --- игра ---
+    function moveNo(fromX, fromY){
+      const r = stage.getBoundingClientRect();
+      const n = noBtn.getBoundingClientRect();
+
+      const pad = 10;
+      const maxX = r.width  - n.width  - pad;
+      const maxY = r.height - n.height - pad;
+
+      const curX = parseFloat(noBtn.style.left);
+      const curY = parseFloat(noBtn.style.top);
+
+      const dirX = fromX < curX + n.width/2 ? 1 : -1;
+      const dirY = fromY < curY + n.height/2 ? 1 : -1;
+
+      const x = clamp(curX + dirX * (120 + Math.random()*140), pad, maxX);
+      const y = clamp(curY + dirY * (80  + Math.random()*140), pad, maxY);
+
+      noBtn.style.left = x + "px";
+      noBtn.style.top  = y + "px";
+    }
+
+    function bumpTry(){
+      tries++;
+      triesEl.textContent = tries;
+      growYes();
+      // слегка "дрожит" Нет
+      noBtn.style.transform = `translateY(${(Math.random()*2-1)*2}px)`;
+      setTimeout(()=> noBtn.style.transform = "", 120);
+      if(SETTINGS.maxTries && tries >= SETTINGS.maxTries){
+        renderSuccess();
+      }
+    }
+
+    yesBtn.addEventListener('click', renderSuccess);
+
+    noBtn.addEventListener('click', (e)=>{
+      e.preventDefault();
+      bumpTry();
+      // при клике пусть уезжает в рандом, чтобы точно не поймала
+      moveNo(Math.random()*stage.clientWidth, Math.random()*stage.clientHeight);
+    });
+
+    stage.addEventListener('pointermove', (e)=>{
+      const r = noBtn.getBoundingClientRect();
+      const d = Math.hypot(
+        e.clientX - (r.left + r.width/2),
+        e.clientY - (r.top  + r.height/2)
+      );
+
+      if(d < SETTINGS.fearRadius){
+        bumpTry();
+        moveNo(e.clientX, e.clientY);
+      }
+    });
+
+    stage.addEventListener('pointerdown', (e)=>{
+      // если ткнула рядом с "Нет" — он пугается сразу
+      const r = noBtn.getBoundingClientRect();
+      const d = Math.hypot(
+        e.clientX - (r.left + r.width/2),
+        e.clientY - (r.top  + r.height/2)
+      );
+      if(d < SETTINGS.fearRadius){
+        bumpTry();
+        moveNo(e.clientX, e.clientY);
+      }
+    });
+
+    window.addEventListener('resize', placeButtons);
+    placeButtons();
+  </script>
+</body>
+</html>
