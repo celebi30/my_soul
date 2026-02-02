@@ -4,8 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>Для Дианы ❤️</title>
+
   <style>
-    :root { color-scheme: dark; }
+    :root { color-scheme: light; }
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
     body{
@@ -13,453 +14,180 @@
       min-height:100vh;
       display:grid;
       place-items:center;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background:
-        radial-gradient(900px 700px at 50% 12%, #35185c, #090911 72%),
-        radial-gradient(600px 500px at 12% 92%, rgba(255,107,214,.16), transparent 58%),
-        radial-gradient(600px 500px at 88% 90%, rgba(255,207,90,.12), transparent 58%);
-      color:#fff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: linear-gradient(180deg, #fde7ef, #f7dbe7);
       overflow:hidden;
-      padding: 16px;
     }
 
-    /* мягкие блики */
-    .glow{
+    /* фоновые сердечки */
+    .bg-heart{
       position: fixed;
-      inset: -45%;
-      background:
-        radial-gradient(circle at 25% 35%, rgba(255,107,214,.12), transparent 45%),
-        radial-gradient(circle at 75% 70%, rgba(255,207,90,.09), transparent 45%);
-      filter: blur(44px);
-      animation: drift 10s ease-in-out infinite alternate;
+      bottom: -20px;
+      font-size: 14px;
+      opacity: .25;
       pointer-events:none;
-      z-index: 0;
+      animation: floatUp linear forwards;
     }
-    @keyframes drift {
-      from { transform: translate(-2%, -1%) scale(1); }
-      to   { transform: translate(2%, 1%) scale(1.02); }
+
+    @keyframes floatUp{
+      from { transform: translateY(0); opacity:.25; }
+      to   { transform: translateY(-120vh); opacity:0; }
     }
 
     .card{
-      width:min(560px, 94vw);
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      backdrop-filter: blur(12px);
-      border-radius: 22px;
-      box-shadow: 0 20px 90px rgba(0,0,0,.55);
-      padding: 16px;
+      background: #fff;
+      border-radius: 20px;
+      padding: 26px 22px 30px;
+      width: min(360px, 92vw);
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0,0,0,.12);
       position: relative;
-      z-index: 2;
-    }
-
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.12);
-      font-size: 13px;
-      opacity:.92;
-      margin-bottom: 10px;
-      white-space: nowrap;
     }
 
     h1{
-      margin: 6px 0 10px;
+      margin: 0 0 10px;
       font-size: 22px;
-      line-height: 1.15;
-      letter-spacing: .2px;
+      font-weight: 700;
+      color:#222;
     }
 
     p{
-      margin: 0 0 14px;
-      opacity:.88;
-      line-height:1.35;
+      margin: 0 0 24px;
       font-size: 15px;
+      color:#666;
+      line-height:1.35;
     }
 
-    .stage{
+    .buttons{
       position: relative;
-      width: 100%;
-      height: min(56vh, 460px);
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.14);
-      overflow: hidden;
-      touch-action: none;
-      display:grid;
-      place-items:center;
-      isolation: isolate;
+      height: 70px;
     }
 
-    .btn{
-      position:absolute;
-      border:0;
-      border-radius: 18px;
-      padding: 16px 18px;
-      font-weight: 900;
-      font-size: 18px;
-      min-width: 140px;
-      cursor:pointer;
-      user-select:none;
-      transition: transform .14s ease, opacity .2s ease, filter .2s ease;
-    }
-
-    #yes{
-      color:#0b0b12;
-      background: linear-gradient(135deg, #ff6bd6, #ffcf5a);
-      box-shadow: 0 14px 34px rgba(255,107,214,.18);
-    }
-    #yes:active{ transform: scale(.98); }
-
-    #no{
-      color:#fff;
-      background: rgba(255,255,255,.10);
-      border: 1px solid rgba(255,255,255,.16);
-      backdrop-filter: blur(6px);
-    }
-
-    .meta{
-      margin-top: 10px;
-      font-size: 13px;
-      opacity:.78;
-      display:flex;
-      justify-content: space-between;
-      gap:10px;
-      flex-wrap: wrap;
-    }
-
-    /* ===== Фоновые маленькие сердечки (постоянно) ===== */
-    .bg-heart{
+    .choice-btn{
       position: absolute;
+      padding: 12px 26px;
+      border-radius: 999px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+      min-width: 100px;
+    }
+
+    /* ДА */
+    #yes{
       left: 50%;
-      top: 105%;
-      font-size: 14px;
-      opacity: .18;
-      pointer-events:none;
-      transform: translateX(-50%);
-      filter: blur(0.2px);
-      z-index: 0;
-      will-change: transform, opacity;
+      transform: translateX(-120%);
+      background: #ff5a8a;
+      color: #fff;
+      box-shadow: 0 10px 24px rgba(255,90,138,.35);
     }
 
-    /* ===== Экран успеха ===== */
-    .successWrap{
-      width: 100%;
-      height: 100%;
-      display:grid;
-      place-items:center;
-      padding: 18px 14px;
-      z-index: 2;
+    #yes:active{
+      transform: translateX(-120%) scale(.96);
     }
 
+    /* НЕТ */
+    #no{
+      left: 50%;
+      transform: translateX(20%);
+      background: #f2f2f2;
+      color: #777;
+      box-shadow: 0 6px 14px rgba(0,0,0,.08);
+    }
+
+    /* экран успеха */
     .success{
-      width: min(420px, 92vw);
-      text-align:center;
-      animation: popIn .45s ease both;
+      animation: fadeIn .4s ease forwards;
     }
 
-    @keyframes popIn {
-      from { transform: translateY(12px) scale(.98); opacity: 0; }
-      to   { transform: translateY(0) scale(1); opacity: 1; }
+    @keyframes fadeIn{
+      from { opacity:0; transform: translateY(8px); }
+      to   { opacity:1; transform: translateY(0); }
     }
 
-    .success h2{
-      margin: 0 0 10px;
-      font-size: 26px;
-      letter-spacing:.2px;
-    }
-
-    .typed{
-      font-size: 18px;
-      margin: 0 0 14px;
-      opacity:.95;
-      min-height: 52px;
-    }
-
-    .gif{
-      width: min(340px, 82vw);
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.12);
-      box-shadow: 0 16px 40px rgba(0,0,0,.35);
-      display:block;
-      margin: 0 auto;
-    }
-
-    .again{
+    .success img{
+      width: 100%;
+      border-radius: 16px;
       margin-top: 14px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.16);
-      background: rgba(255,255,255,.08);
-      color:#fff;
-      padding: 10px 12px;
-      font-weight: 900;
-      cursor:pointer;
+      box-shadow: 0 12px 30px rgba(0,0,0,.15);
     }
 
-    /* конфетти сердечки (на успех) */
-    .heart{
-      position: fixed;
-      top: -24px;
-      left: 50%;
-      font-size: 18px;
-      pointer-events:none;
-      will-change: transform, opacity;
-      opacity:.95;
-      filter: drop-shadow(0 10px 14px rgba(0,0,0,.35));
-      z-index: 999;
+    .success p{
+      font-size: 17px;
+      color:#333;
+      margin-top: 14px;
     }
   </style>
 </head>
 
 <body>
-  <div class="glow"></div>
 
-  <div class="card">
-    <span class="badge">правильный ответ только один 😌</span>
-    <h1 id="title">Диана, ты будешь моей Валентинкой? ❤️</h1>
-    <p id="subtitle">Нажатие «Да» вызывает улыбку. «Нет» может начать паниковать 🙂</p>
+  <div class="card" id="card">
+    <h1>Диана, ты будешь моей Валентинкой? ❤️</h1>
+    <p>Нажатие «Да» вызывает улыбку. «Нет» может начать паниковать 🙂</p>
 
-    <div class="stage" id="stage">
-      <!-- фоновые сердечки будут добавляться сюда -->
-      <button class="btn" id="yes">Да</button>
-      <button class="btn" id="no">Нет</button>
-    </div>
-
-    <div class="meta">
-      <div>Попыток «Нет»: <b id="tries">0</b></div>
-      <div>Подсказка: попробуй нажать «Нет» 😉</div>
+    <div class="buttons" id="buttons">
+      <button class="choice-btn" id="yes">Да</button>
+      <button class="choice-btn" id="no">Нет</button>
     </div>
   </div>
 
   <script>
-    // ===== ТВОИ ТЕКСТЫ + ГИФКА =====
-    const SETTINGS = {
-      question: "Диана, ты будешь моей Валентинкой? ❤️",
-      sub: "Нажатие «Да» вызывает улыбку. «Нет» может начать паниковать 🙂",
-      successTitle: "Диана ❤️",
-      successText: "Ты — мой выбор сегодня, завтра и всегда ❤️",
-      gifUrl: "us.jpg",
-      fearRadius: 120,
-      maxTries: 14
-    };
-
-    const titleEl = document.getElementById('title');
-    const subEl   = document.getElementById('subtitle');
-    const stage   = document.getElementById('stage');
-    const yesBtn  = document.getElementById('yes');
-    const noBtn   = document.getElementById('no');
-    const triesEl = document.getElementById('tries');
-
-    titleEl.textContent = SETTINGS.question;
-    subEl.textContent   = SETTINGS.sub;
+    const card = document.getElementById('card');
+    const yes  = document.getElementById('yes');
+    const no   = document.getElementById('no');
 
     let tries = 0;
 
-    function clamp(v,a,b){ return Math.max(a, Math.min(b,v)); }
+    // фоновые сердечки
+    setInterval(() => {
+      const h = document.createElement('div');
+      h.className = 'bg-heart';
+      h.textContent = Math.random() > .5 ? '❤' : '💗';
+      h.style.left = Math.random()*100 + 'vw';
+      h.style.animationDuration = (6 + Math.random()*6) + 's';
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 12000);
+    }, 350);
 
-    function placeButtons(){
-      const r = stage.getBoundingClientRect();
-      const yR = yesBtn.getBoundingClientRect();
-      const nR = noBtn.getBoundingClientRect();
-      const gap = 14;
+    function moveNo(){
+      const btns = document.getElementById('buttons').getBoundingClientRect();
+      const x = Math.random() * (btns.width - no.offsetWidth);
+      const y = Math.random() * (btns.height - no.offsetHeight);
 
-      const y = r.height - 24 - Math.max(yR.height, nR.height);
-      const x0 = (r.width - (yR.width + gap + nR.width)) / 2;
-
-      yesBtn.style.left = x0 + "px";
-      yesBtn.style.top  = y + "px";
-
-      noBtn.style.left  = (x0 + yR.width + gap) + "px";
-      noBtn.style.top   = y + "px";
+      no.style.left = x + 'px';
+      no.style.top  = y + 'px';
     }
 
     function growYes(){
-      const s = 1 + tries * 0.11;
-      yesBtn.style.transform = `scale(${Math.min(s, 2.1)})`;
-      yesBtn.style.filter = `brightness(${1 + Math.min(tries*0.03, 0.35)})`;
+      const s = 1 + tries * 0.12;
+      yes.style.transform = `translateX(-120%) scale(${Math.min(s, 1.9)})`;
     }
 
-    function moveNo(fromX, fromY){
-      const r = stage.getBoundingClientRect();
-      const n = noBtn.getBoundingClientRect();
-
-      const pad = 10;
-      const maxX = r.width  - n.width  - pad;
-      const maxY = r.height - n.height - pad;
-
-      const curX = parseFloat(noBtn.style.left);
-      const curY = parseFloat(noBtn.style.top);
-
-      const dirX = fromX < curX + n.width/2 ? 1 : -1;
-      const dirY = fromY < curY + n.height/2 ? 1 : -1;
-
-      const x = clamp(curX + dirX * (120 + Math.random()*140), pad, maxX);
-      const y = clamp(curY + dirY * (80  + Math.random()*140), pad, maxY);
-
-      noBtn.style.left = x + "px";
-      noBtn.style.top  = y + "px";
-    }
-
-    function bumpTry(){
+    no.addEventListener('click', e => {
+      e.preventDefault();
       tries++;
-      triesEl.textContent = tries;
       growYes();
+      moveNo();
+    });
 
-      noBtn.style.transform = `translateY(${(Math.random()*2-1)*2}px)`;
-      setTimeout(()=> noBtn.style.transform = "", 120);
+    no.addEventListener('touchstart', e => {
+      tries++;
+      growYes();
+      moveNo();
+    });
 
-      if(SETTINGS.maxTries && tries >= SETTINGS.maxTries){
-        renderSuccess();
-      }
-    }
-
-    // ==== фоновые маленькие сердечки: создаём постоянно ====
-    function spawnBgHeart(){
-      const el = document.createElement('div');
-      el.className = 'bg-heart';
-      el.textContent = (Math.random() < 0.6) ? '❤' : '💗';
-
-      const r = stage.getBoundingClientRect();
-      const x = 10 + Math.random() * (r.width - 20);
-      const size = 12 + Math.random()*10;
-      const dur  = 5200 + Math.random()*4200;
-      const drift = (Math.random()-0.5) * 120;
-      const rot = (Math.random()*140 - 70);
-
-      el.style.left = x + "px";
-      el.style.fontSize = size + "px";
-      el.style.opacity = (0.10 + Math.random()*0.14).toFixed(2);
-
-      stage.appendChild(el);
-
-      const start = performance.now();
-      function tick(t){
-        const p = Math.min(1, (t-start)/dur);
-        // снизу вверх (top от 105% к -10%)
-        const y = (105 - p*120);
-        el.style.transform =
-          `translate(${drift*p}px, ${0}px) translateY(${y}%) rotate(${rot*p}deg)`;
-        el.style.opacity = String((1-p) * parseFloat(el.style.opacity));
-        if(p < 1) requestAnimationFrame(tick);
-        else el.remove();
-      }
-      requestAnimationFrame(tick);
-    }
-
-    let bgInterval = null;
-    function startBackgroundHearts(){
-      if(bgInterval) return;
-      // стартовый “залп”
-      for(let i=0;i<10;i++) setTimeout(spawnBgHeart, i*120);
-      bgInterval = setInterval(spawnBgHeart, 260);
-    }
-
-    // ==== конфетти на успех ====
-    function heartsBurst(count=85){
-      const e = ["❤️","💖","💘","💕","💗","💝"];
-      for(let i=0;i<count;i++){
-        const h = document.createElement("div");
-        h.className = "heart";
-        h.textContent = e[(Math.random()*e.length)|0];
-
-        const startX = Math.random()*window.innerWidth;
-        const drift = (Math.random()-0.5)*320;
-        const dur = 1400 + Math.random()*1500;
-        const size = 14 + Math.random()*18;
-
-        h.style.left = startX+"px";
-        h.style.fontSize = size+"px";
-        document.body.appendChild(h);
-
-        const s = performance.now();
-        (function f(t){
-          const p = Math.min(1,(t-s)/dur);
-          const y = -24 + p*(window.innerHeight+90);
-          const rot = (Math.random()*260 - 130)*p;
-          h.style.transform = `translate(${drift*p}px, ${y}px) rotate(${rot}deg)`;
-          h.style.opacity = String(1-p);
-          if(p<1) requestAnimationFrame(f);
-          else h.remove();
-        })(s);
-      }
-    }
-
-    function typeInto(el, text, speed=26){
-      el.textContent = "";
-      let i = 0;
-      const tick = () => {
-        el.textContent = text.slice(0, i);
-        i++;
-        if(i <= text.length) setTimeout(tick, speed);
-      };
-      tick();
-    }
-
-    function renderSuccess(){
-      // оставим фоновые сердечки — пусть продолжают лететь
-      stage.innerHTML = `
-        <div class="successWrap">
-          <div class="success">
-            <h2>${SETTINGS.successTitle}</h2>
-            <div class="typed" id="typed"></div>
-            <img class="gif" src="${SETTINGS.gifUrl}" alt="love gif">
-            <button class="again" id="again">Ещё раз 😄</button>
-          </div>
+    yes.addEventListener('click', () => {
+      card.innerHTML = `
+        <div class="success">
+          <p><strong>Ты — мой выбор сегодня, завтра и всегда ❤️</strong></p>
+          <img src="us.jpg" alt="Мы вместе">
         </div>
       `;
-
-      // чтобы сердечки продолжали добавляться — перезапустим интервал на новом DOM
-      bgInterval && clearInterval(bgInterval);
-      bgInterval = null;
-      startBackgroundHearts();
-
-      heartsBurst(95);
-      typeInto(document.getElementById('typed'), SETTINGS.successText, 24);
-
-      document.getElementById('again').addEventListener('click', () => location.reload());
-    }
-
-    // --- кнопки ---
-    yesBtn.addEventListener('click', renderSuccess);
-
-    noBtn.addEventListener('click', (e)=>{
-      e.preventDefault();
-      bumpTry();
-      moveNo(Math.random()*stage.clientWidth, Math.random()*stage.clientHeight);
     });
-
-    stage.addEventListener('pointermove', (e)=>{
-      const r = noBtn.getBoundingClientRect();
-      const d = Math.hypot(
-        e.clientX - (r.left + r.width/2),
-        e.clientY - (r.top  + r.height/2)
-      );
-      if(d < SETTINGS.fearRadius){
-        bumpTry();
-        moveNo(e.clientX, e.clientY);
-      }
-    });
-
-    stage.addEventListener('pointerdown', (e)=>{
-      const r = noBtn.getBoundingClientRect();
-      const d = Math.hypot(
-        e.clientX - (r.left + r.width/2),
-        e.clientY - (r.top  + r.height/2)
-      );
-      if(d < SETTINGS.fearRadius){
-        bumpTry();
-        moveNo(e.clientX, e.clientY);
-      }
-    });
-
-    window.addEventListener('resize', placeButtons);
-
-    // старт
-    placeButtons();
-    startBackgroundHearts();
   </script>
+
 </body>
 </html>
